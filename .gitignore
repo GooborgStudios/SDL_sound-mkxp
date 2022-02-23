@@ -10,16 +10,5 @@
 .deps
 .libs
 
-aclocal.m4
-Makefile
-Makefile.in
-configure
-compile
-config.*
-depcomp
-install-sh
-libtool
-ltmain.sh
-missing
-stamp-h1
+build/*
 
