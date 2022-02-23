@@ -1,3 +1,14 @@
+This is a custom fork of SDL_sound designed for MKXP, re-forked for use in the
+OneShot engine and with CMake.
+
+Installation:
+
+$ cmake .
+$ make
+$ make install
+
+----------------------------------------
+
 SDL_sound. An abstract soundfile decoder.
 
 SDL_sound is a library that handles the decoding of several popular sound file
@@ -44,9 +55,6 @@ These external libraries are OPTIONAL. SDL_sound will build and function
  - MIDI files
  - MP3 files (internal decoder, different than the one SMPEG uses)
  - Raw waveform data
-
-Building/Installing:
-  Please read the INSTALL document.
 
 Reporting bugs/commenting:
  There is a mailing list available. To subscribe, send a blank email to
