@@ -38,36 +38,8 @@ doption(ENABLE_PHYSFS "enable PhysicsFS in playsound" OFF SUPPORT_PHYSFS)
 doption(STATIC_FLAC "FLAC should be linked as a static library" OFF FLAC__NO_DLL)
 
 # SDL2
-add_library(SDL2::SDL2 UNKNOWN IMPORTED)
-find_path(SDL2_INCLUDE SDL.h PATH_SUFFIXES SDL2)
-find_library(SDL2_LIB NAMES SDL2 SDL2d)
-set_target_properties(SDL2::SDL2 PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE}"
-  IMPORTED_LOCATION "${SDL2_LIB}")
-if(WIN32)
-  set(libs user32 gdi32 winmm imm32 ole32 oleaut32 version uuid advapi32 shell32)
-else()
-  set(libs dl pthread m)
-endif()
-set_target_properties(SDL2::SDL2 PROPERTIES
-  INTERFACE_LINK_LIBRARIES "${libs}")
-unset(libs)
-
-if(WIN32)
-  add_library(SDL2::SDL2main UNKNOWN IMPORTED)
-  set(libs)
-  if(MINGW)
-    list(APPEND libs mingw32)
-  endif()
-  find_library(SDL2MAIN_LIB NAMES SDL2main SDL2maind)
-  list(APPEND libs "${SDL2MAIN_LIB}")
-  set_target_properties(SDL2::SDL2main PROPERTIES
-    IMPORTED_LOCATION "${SDL2MAIN_LIB}"
-    INTERFACE_LINK_LIBRARIES "${libs}")
-  unset(libs)
-else()
-  add_library(SDL2::SDL2main INTERFACE IMPORTED)
-endif()
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
 
 # mikmod
 if(ENABLE_MIKMOD)
@@ -122,7 +94,7 @@ add_library(SDL_sound
 
 add_subdirectory(decoders)
 
-target_link_libraries(SDL_sound decoders SDL2::SDL2)
+target_link_libraries(SDL_sound decoders ${SDL2_LIBRARIES})
 set_target_properties(SDL_sound PROPERTIES VERSION ${VERSION} SOVERSION ${SOVERSION})
 target_include_directories(SDL_sound PUBLIC .)
 
